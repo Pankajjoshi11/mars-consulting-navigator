@@ -5,11 +5,11 @@ import offshoreHero from "@/assets/offshore-hero.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
 const stagger = {
-  visible: { transition: { staggerChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.15 } }
 };
 
 const OffshoreResourcing = () => {
@@ -21,34 +21,34 @@ const OffshoreResourcing = () => {
   const localCost = devs * salary * (months / 12);
   const offshoreCost = localCost * 0.4;
   const savings = localCost - offshoreCost;
-  const savingsPercent = Math.round((savings / localCost) * 100);
+  const savingsPercent = Math.round(savings / localCost * 100);
 
   const formatCurrency = (n: number) =>
-    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
   return (
     <div className="pt-16">
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
-          <div className="bg-card" />
+          
           <div className="relative">
             <img src={offshoreHero} alt="Offshore team collaboration" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-primary/40" />
+            <div className="absolute inset-0 bg-primary/40 opacity-100" />
           </div>
         </div>
         <div className="relative z-10 container-mars px-6 lg:px-20 w-full">
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-xl">
-            <motion.p variants={fadeInUp} className="text-muted-foreground text-sm font-semibold tracking-widest uppercase mb-2">
+            <motion.p variants={fadeInUp} className="text-sm font-semibold tracking-widest uppercase mb-2 text-primary-foreground">
               Services
             </motion.p>
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl font-bold mb-4 text-primary-foreground">
               Offshore Resourcing
             </motion.h1>
-            <motion.h2 variants={fadeInUp} className="text-xl text-foreground/80 mb-6 font-medium leading-relaxed">
+            <motion.h2 variants={fadeInUp} className="text-xl mb-6 font-medium leading-relaxed text-primary-foreground">
               Scale your team with contract‑based offshore specialists.
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed">
+            <motion.p variants={fadeInUp} className="leading-relaxed text-primary-foreground">
               Access skilled Developers, Testers, Data Analysts and PMO/Project Admin resources who integrate with
               your ways of working — contracted for the life of your project.
             </motion.p>
@@ -64,22 +64,22 @@ const OffshoreResourcing = () => {
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
-              "Right skills, right time.",
-              "Cost transparency with clear contractual engagement terms.",
-              "Delivery alignment.",
-            ].map((item, i) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card rounded-2xl p-6 flex items-start gap-3"
-              >
+            "Right skills, right time.",
+            "Cost transparency with clear contractual engagement terms.",
+            "Delivery alignment."].
+            map((item, i) =>
+            <motion.div
+              key={item}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-card rounded-2xl p-6 flex items-start gap-3">
+
                 <CheckCircle className="w-5 h-5 text-accent mt-0.5 shrink-0" />
                 <p className="text-foreground font-medium">{item}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -92,22 +92,22 @@ const OffshoreResourcing = () => {
           </motion.h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              "Technical Development and Testing",
-              "Business Analysis",
-              "Data Analysis",
-              "PMO Support and Project Administration",
-            ].map((role, i) => (
-              <motion.div
-                key={role}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-primary rounded-2xl p-6 text-primary-foreground"
-              >
+            "Technical Development and Testing",
+            "Business Analysis",
+            "Data Analysis",
+            "PMO Support and Project Administration"].
+            map((role, i) =>
+            <motion.div
+              key={role}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-primary rounded-2xl p-6 text-primary-foreground">
+
                 <p className="font-semibold">{role}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -126,8 +126,8 @@ const OffshoreResourcing = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto"
-          >
+            className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
             {/* Inputs */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-primary-foreground">Project Details</h3>
@@ -139,8 +139,8 @@ const OffshoreResourcing = () => {
                   max={100}
                   value={devs}
                   onChange={(e) => setDevs(Number(e.target.value))}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-                />
+                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none" />
+
               </div>
               <div>
                 <label className="block text-sm text-primary-foreground/70 mb-2">Average Local Salary (USD/year)</label>
@@ -149,8 +149,8 @@ const OffshoreResourcing = () => {
                   min={1000}
                   value={salary}
                   onChange={(e) => setSalary(Number(e.target.value))}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-                />
+                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none" />
+
               </div>
               <div>
                 <label className="block text-sm text-primary-foreground/70 mb-2">Project Duration (months)</label>
@@ -160,13 +160,13 @@ const OffshoreResourcing = () => {
                   max={60}
                   value={months}
                   onChange={(e) => setMonths(Number(e.target.value))}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-                />
+                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:ring-2 focus:ring-accent focus:outline-none" />
+
               </div>
               <button
                 onClick={() => setShowResults(true)}
-                className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-              >
+                className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors">
+
                 Calculate Savings
               </button>
             </div>
@@ -197,8 +197,8 @@ const OffshoreResourcing = () => {
           </motion.div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 };
 
 export default OffshoreResourcing;
