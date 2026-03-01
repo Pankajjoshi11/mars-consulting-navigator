@@ -87,14 +87,6 @@ const AboutUs = () => {
       <section className="section-padding bg-secondary">
         <div className="container-mars">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <img src={aboutTeam} alt="Mars Consulting team" className="rounded-2xl shadow-lg w-full" />
-            </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
               <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 A Consulting Firm Built on Delivery
@@ -108,6 +100,14 @@ const AboutUs = () => {
               <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed">
                 Our value-driven approach means we are always focused on outcomes — not just outputs. We measure success by the value realised, the adoption achieved, and the confidence our clients feel at every stage.
               </motion.p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <img src={aboutTeam} alt="Mars Consulting team" className="rounded-2xl shadow-lg w-full" />
             </motion.div>
           </div>
         </div>
