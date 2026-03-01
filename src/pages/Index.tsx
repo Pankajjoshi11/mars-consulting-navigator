@@ -35,7 +35,7 @@ const Index = () => {
         className="relative min-h-[90vh] flex items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url(${heroBg})` }}
       >
-        <div className="absolute inset-0 bg-primary/70" />
+        <div className="absolute inset-0 bg-primary/40" />
         <motion.div
           initial="hidden"
           animate="visible"
