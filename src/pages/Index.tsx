@@ -286,6 +286,19 @@ const Index = () => {
                   </a>
                 </div>
               </div>
+              <div className="mt-6 rounded-xl overflow-hidden border border-primary-foreground/10">
+                <iframe
+                  title="Our locations"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.204898!2d73.856743!3d18.520430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c07f4e4f0e0d%3A0x4f0e4e4e4e4e4e4e!2sPune%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1690000000000"
+                  width="100%"
+                  height="160"
+                  style={{ border: 0, filter: "grayscale(0.3) contrast(1.1)" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="opacity-80"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
