@@ -31,10 +31,8 @@ const Index = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section
-        className="relative min-h-[90vh] flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover object-[50%_30%] md:object-center" />
         <div className="absolute inset-0 bg-primary/40" />
         <motion.div
           initial="hidden"
