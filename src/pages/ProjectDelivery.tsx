@@ -62,82 +62,141 @@ const ProjectDelivery = () => {
             How We Work
           </motion.h2>
 
-          {/* Mobile: vertical snake timeline */}
-          <div className="md:hidden space-y-0">
+          {/* Mobile: vertical snake timeline (like reference image 2) */}
+          <div className="md:hidden flex flex-col items-center">
             {steps.map((step, i) => {
               const Icon = step.icon;
+              const isLeft = i % 2 === 0;
               return (
-                <motion.div
-                  key={step.num}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.12, duration: 0.5 }}
-                  className="relative flex items-center gap-4 py-4"
-                >
-                  {i < steps.length - 1 && (
-                    <div className="absolute left-5 top-14 bottom-0 w-0 border-l-2 border-dotted border-accent/40" />
+                <div key={step.num} className="relative flex flex-col items-center">
+                  {/* Dotted connector from previous */}
+                  {i > 0 && (
+                    <div className="w-0 h-8 border-l-2 border-dotted border-muted-foreground/30" />
                   )}
-                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-xs shrink-0 z-10">
-                    {step.num}
-                  </div>
-                  <div className="bg-primary rounded-2xl p-4 flex-1 flex items-center gap-3">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-bold text-primary-foreground mb-1">{step.title}</h3>
-                      <p className="text-primary-foreground/70 text-xs">{step.desc}</p>
+                  {/* Card row */}
+                  <div className={`flex items-center gap-3 w-full max-w-xs ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
+                    {/* Card */}
+                    <motion.div
+                      initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                      className="bg-primary rounded-2xl p-4 flex-1 flex items-center gap-3"
+                    >
+                      {isLeft ? (
+                        <>
+                          <div className="flex-1">
+                            <h3 className="text-sm font-bold text-primary-foreground">{step.title}</h3>
+                            <p className="text-primary-foreground/60 text-xs mt-1">{step.desc}</p>
+                          </div>
+                          <div className="w-9 h-9 rounded-full bg-card flex items-center justify-center shrink-0">
+                            <Icon className="w-4 h-4 text-accent" />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-9 h-9 rounded-full bg-card flex items-center justify-center shrink-0">
+                            <Icon className="w-4 h-4 text-accent" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-sm font-bold text-primary-foreground">{step.title}</h3>
+                            <p className="text-primary-foreground/60 text-xs mt-1">{step.desc}</p>
+                          </div>
+                        </>
+                      )}
+                    </motion.div>
+                    {/* Circle connector + step number */}
+                    <div className="flex flex-col items-center shrink-0">
+                      <div className="w-3 h-3 rounded-full border-2 border-accent bg-card" />
                     </div>
-                    <div className="w-9 h-9 rounded-full bg-card flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4 text-accent" />
+                    {/* Step label */}
+                    <div className={`shrink-0 w-14 ${isLeft ? 'text-left' : 'text-right'}`}>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase">Step</p>
+                      <p className="text-2xl font-bold text-accent">{step.num}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
 
-          {/* Desktop: curved arc timeline inspired by reference */}
-          <div className="hidden md:flex items-center gap-8">
-            {/* Left: Semi-circle arc with label */}
-            <div className="relative w-44 shrink-0 self-stretch flex items-center justify-center" style={{ minHeight: 420 }}>
-              <svg viewBox="0 0 140 420" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+          {/* Desktop: semi-circular arc with cards fanning out (like reference image 1) */}
+          <div className="hidden md:flex justify-center">
+            <div className="relative" style={{ width: 900, height: 520 }}>
+              {/* Semi-circle arc */}
+              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 900 520" fill="none">
+                {/* Main semi-circle curve on the left side, centred */}
                 <path
-                  d="M 130 30 C 40 30, 10 120, 10 210 C 10 300, 40 390, 130 390"
-                  fill="none"
+                  d="M 340 40 C 180 40, 120 130, 120 260 C 120 390, 180 480, 340 480"
                   stroke="hsl(var(--accent))"
-                  strokeWidth="2.5"
-                  strokeDasharray="6 6"
-                  opacity="0.45"
+                  strokeWidth="3"
+                  strokeDasharray="8 6"
+                  opacity="0.4"
                 />
+                {/* Filled semi-circle decorative arcs */}
+                <path
+                  d="M 280 140 C 220 140, 190 190, 190 260 C 190 330, 220 380, 280 380"
+                  stroke="hsl(var(--accent))"
+                  strokeWidth="22"
+                  strokeLinecap="round"
+                  opacity="0.12"
+                  fill="none"
+                />
+                <path
+                  d="M 270 170 C 230 170, 210 210, 210 260 C 210 310, 230 350, 270 350"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="18"
+                  strokeLinecap="round"
+                  opacity="0.15"
+                  fill="none"
+                />
+                {/* Branch lines from arc to cards */}
+                {[
+                  { x1: 340, y1: 52, x2: 420, y2: 52 },
+                  { x1: 310, y1: 155, x2: 420, y2: 155 },
+                  { x1: 295, y1: 260, x2: 420, y2: 260 },
+                  { x1: 310, y1: 365, x2: 420, y2: 365 },
+                  { x1: 340, y1: 468, x2: 420, y2: 468 },
+                ].map((line, i) => (
+                  <g key={i}>
+                    <line x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke="hsl(var(--accent))" strokeWidth="2" strokeDasharray="5 4" opacity="0.35" />
+                    <circle cx={line.x1} cy={line.y1} r="5" fill="hsl(var(--accent))" opacity="0.5" />
+                    <circle cx={line.x1 - 12} cy={line.y1} r="2.5" fill="hsl(var(--accent))" opacity="0.3" />
+                  </g>
+                ))}
               </svg>
-              <div className="text-center z-10">
-                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Our</p>
-                <p className="text-xl font-bold text-foreground">Process</p>
-              </div>
-            </div>
 
-            {/* Right: stacked step cards */}
-            <div className="flex-1 space-y-4">
+              {/* Centre label inside the arc */}
+              <div className="absolute flex flex-col items-center justify-center" style={{ left: 160, top: 210, width: 120, height: 100 }}>
+                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">How We</p>
+                <p className="text-2xl font-bold text-foreground">Work</p>
+              </div>
+
+              {/* Step cards positioned absolutely */}
               {steps.map((step, i) => {
                 const Icon = step.icon;
-                const isEven = i % 2 === 0;
+                const yPositions = [20, 123, 228, 333, 436];
                 return (
                   <motion.div
                     key={step.num}
-                    initial={{ opacity: 0, x: 40 }}
+                    initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className={`flex items-center gap-4 ${isEven ? '' : 'ml-16'}`}
+                    transition={{ delay: i * 0.12, duration: 0.5 }}
+                    className="absolute flex items-center gap-3"
+                    style={{ left: 400, top: yPositions[i], width: 460 }}
                   >
-                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm shrink-0 shadow-lg z-10">
+                    {/* Number badge */}
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm shrink-0 shadow-lg relative z-10">
                       {step.num}
                     </div>
-                    <div className="bg-primary rounded-2xl px-6 py-4 flex items-center gap-4 flex-1 max-w-lg shadow-md">
+                    {/* Card */}
+                    <div className="bg-primary rounded-2xl px-5 py-4 flex items-center gap-4 flex-1 shadow-md">
                       <div className="flex-1">
-                        <h3 className="text-base font-bold text-primary-foreground mb-1">{step.title}</h3>
-                        <p className="text-primary-foreground/70 text-sm">{step.desc}</p>
+                        <h3 className="text-sm font-bold text-primary-foreground">{step.title}</h3>
+                        <p className="text-primary-foreground/60 text-xs mt-1">{step.desc}</p>
                       </div>
-                      <div className="w-11 h-11 rounded-full bg-card flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center shrink-0">
                         <Icon className="w-5 h-5 text-accent" />
                       </div>
                     </div>
