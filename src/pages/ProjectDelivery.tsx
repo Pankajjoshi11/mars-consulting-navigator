@@ -61,29 +61,55 @@ const ProjectDelivery = () => {
           >
             How We Work
           </motion.h2>
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-border" />
-            <div className="space-y-12">
+
+          {/* Mobile: vertical list */}
+          <div className="md:hidden space-y-6">
+            {steps.map((step, i) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="flex items-start gap-4"
+              >
+                <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm shrink-0">
+                  {step.num}
+                </div>
+                <div className="bg-secondary rounded-2xl p-5 flex-1">
+                  <h3 className="text-lg font-bold text-foreground mb-1">{step.title}</h3>
+                  <p className="text-muted-foreground text-sm">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Desktop: horizontal timeline */}
+          <div className="hidden md:block">
+            <div className="flex items-start justify-between gap-2">
               {steps.map((step, i) => (
                 <motion.div
                   key={step.num}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className={`flex flex-col md:flex-row items-center gap-6 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  transition={{ delay: i * 0.12, duration: 0.5 }}
+                  className="flex items-start flex-1"
                 >
-                  <div className={`flex-1 ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                    <div className="bg-secondary rounded-2xl p-6">
-                      <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
+                  <div className="flex flex-col items-center text-center flex-1">
+                    <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-lg mb-4">
+                      {step.num}
+                    </div>
+                    <div className="bg-secondary rounded-2xl p-5 w-full">
+                      <h3 className="text-base font-bold text-foreground mb-2">{step.title}</h3>
                       <p className="text-muted-foreground text-sm">{step.desc}</p>
                     </div>
                   </div>
-                  <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-lg shrink-0 z-10">
-                    {step.num}
-                  </div>
-                  <div className="flex-1 hidden md:block" />
+                  {i < steps.length - 1 && (
+                    <div className="flex items-center pt-5 px-1 shrink-0">
+                      <ArrowRight className="w-5 h-5 text-accent" />
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
