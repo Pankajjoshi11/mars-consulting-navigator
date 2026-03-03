@@ -168,9 +168,10 @@ const AboutUs = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
+                className="bg-card/10 backdrop-blur-sm rounded-2xl p-8 border border-primary-foreground/10"
               >
-                <p className="text-4xl md:text-5xl font-bold text-accent mb-2">{item.stat}</p>
-                <p className="text-primary-foreground/70">{item.label}</p>
+                <p className="text-4xl md:text-5xl font-bold text-primary-foreground mb-3">{item.stat}</p>
+                <p className="text-primary-foreground/80 text-base">{item.label}</p>
               </motion.div>
             ))}
           </div>
