@@ -17,10 +17,9 @@ const Navbar = () => {
       path: "/services",
       dropdown: [
         { label: "Project Delivery Services", path: "/services/project-delivery" },
-        { label: "Offshore Resourcing", path: "/services/offshore-resourcing" },
+        { label: "Hire a Talent", path: "/services/offshore-resourcing" },
       ],
     },
-    { label: "Hire Talent", path: "/services/offshore-resourcing" },
     { label: "About Us", path: "/about" },
     { label: "Contact Us", path: "/contact" },
   ];
