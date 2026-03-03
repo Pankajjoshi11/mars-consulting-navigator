@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Lightbulb, Target, CalendarCheck, Rocket, ShieldCheck } from "lucide-react";
 import projectDeliveryHero from "@/assets/project-delivery-hero.jpg";
 
 const fadeInUp = {
@@ -14,11 +14,11 @@ const stagger = {
 
 const ProjectDelivery = () => {
   const steps = [
-    { num: "1", title: "Discover & Analyse", desc: "Clarify objectives, constraints, and stakeholder needs." },
-    { num: "2", title: "Purpose Driven Solution", desc: "Select or design solutions that align to context and goals." },
-    { num: "3", title: "Plan", desc: "Milestones, budget, resourcing, and risk/governance." },
-    { num: "4", title: "Deliver", desc: "Focused execution with transparent reporting." },
-    { num: "5", title: "Value Realisation & Hypercare", desc: "Adoption, stabilisation, and measurable outcomes." },
+    { num: "01", title: "Discover & Analyse", desc: "Clarify objectives, constraints, and stakeholder needs.", icon: Lightbulb },
+    { num: "02", title: "Purpose Driven Solution", desc: "Select or design solutions that align to context and goals.", icon: Target },
+    { num: "03", title: "Plan", desc: "Milestones, budget, resourcing, and risk/governance.", icon: CalendarCheck },
+    { num: "04", title: "Deliver", desc: "Focused execution with transparent reporting.", icon: Rocket },
+    { num: "05", title: "Value Realisation & Hypercare", desc: "Adoption, stabilisation, and measurable outcomes.", icon: ShieldCheck },
   ];
 
   return (
@@ -62,56 +62,88 @@ const ProjectDelivery = () => {
             How We Work
           </motion.h2>
 
-          {/* Mobile: vertical list */}
-          <div className="md:hidden space-y-6">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="flex items-start gap-4"
-              >
-                <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm shrink-0">
-                  {step.num}
-                </div>
-                <div className="bg-secondary rounded-2xl p-5 flex-1">
-                  <h3 className="text-lg font-bold text-foreground mb-1">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm">{step.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Desktop: horizontal timeline */}
-          <div className="hidden md:block">
-            <div className="flex items-start justify-between gap-2">
-              {steps.map((step, i) => (
+          {/* Mobile: vertical snake timeline */}
+          <div className="md:hidden space-y-0">
+            {steps.map((step, i) => {
+              const Icon = step.icon;
+              return (
                 <motion.div
                   key={step.num}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.12, duration: 0.5 }}
-                  className="flex items-start flex-1"
+                  className="relative flex items-center gap-4 py-4"
                 >
-                  <div className="flex flex-col items-center text-center flex-1">
-                    <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-lg mb-4">
-                      {step.num}
+                  {i < steps.length - 1 && (
+                    <div className="absolute left-5 top-14 bottom-0 w-0 border-l-2 border-dotted border-accent/40" />
+                  )}
+                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-xs shrink-0 z-10">
+                    {step.num}
+                  </div>
+                  <div className="bg-primary rounded-2xl p-4 flex-1 flex items-center gap-3">
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-primary-foreground mb-1">{step.title}</h3>
+                      <p className="text-primary-foreground/70 text-xs">{step.desc}</p>
                     </div>
-                    <div className="bg-secondary rounded-2xl p-5 w-full">
-                      <h3 className="text-base font-bold text-foreground mb-2">{step.title}</h3>
-                      <p className="text-muted-foreground text-sm">{step.desc}</p>
+                    <div className="w-9 h-9 rounded-full bg-card flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-accent" />
                     </div>
                   </div>
-                  {i < steps.length - 1 && (
-                    <div className="flex items-center pt-5 px-1 shrink-0">
-                      <ArrowRight className="w-5 h-5 text-accent" />
-                    </div>
-                  )}
                 </motion.div>
-              ))}
+              );
+            })}
+          </div>
+
+          {/* Desktop: curved arc timeline inspired by reference */}
+          <div className="hidden md:flex items-center gap-8">
+            {/* Left: Semi-circle arc with label */}
+            <div className="relative w-44 shrink-0 self-stretch flex items-center justify-center" style={{ minHeight: 420 }}>
+              <svg viewBox="0 0 140 420" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                <path
+                  d="M 130 30 C 40 30, 10 120, 10 210 C 10 300, 40 390, 130 390"
+                  fill="none"
+                  stroke="hsl(var(--accent))"
+                  strokeWidth="2.5"
+                  strokeDasharray="6 6"
+                  opacity="0.45"
+                />
+              </svg>
+              <div className="text-center z-10">
+                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Our</p>
+                <p className="text-xl font-bold text-foreground">Process</p>
+              </div>
+            </div>
+
+            {/* Right: stacked step cards */}
+            <div className="flex-1 space-y-4">
+              {steps.map((step, i) => {
+                const Icon = step.icon;
+                const isEven = i % 2 === 0;
+                return (
+                  <motion.div
+                    key={step.num}
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    className={`flex items-center gap-4 ${isEven ? '' : 'ml-16'}`}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm shrink-0 shadow-lg z-10">
+                      {step.num}
+                    </div>
+                    <div className="bg-primary rounded-2xl px-6 py-4 flex items-center gap-4 flex-1 max-w-lg shadow-md">
+                      <div className="flex-1">
+                        <h3 className="text-base font-bold text-primary-foreground mb-1">{step.title}</h3>
+                        <p className="text-primary-foreground/70 text-sm">{step.desc}</p>
+                      </div>
+                      <div className="w-11 h-11 rounded-full bg-card flex items-center justify-center shrink-0">
+                        <Icon className="w-5 h-5 text-accent" />
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
