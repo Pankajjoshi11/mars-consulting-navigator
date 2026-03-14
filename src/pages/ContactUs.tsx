@@ -12,7 +12,7 @@ const fadeInUp = {
  * Keep http://localhost:5000 for local testing.
  */
 const BACKEND_URL = import.meta.env.PROD 
-  ? "https://your-backend-service-name.onrender.com" 
+  ? "https://mars-consulting-navigator.onrender.com" 
   : "http://localhost:5000";
 
 const ContactUs = () => {
