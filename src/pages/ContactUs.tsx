@@ -1,19 +1,52 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+/**
+ * Replace the URL below with your live Render/Railway URL after deployment.
+ * Keep http://localhost:5000 for local testing.
+ */
+const BACKEND_URL = import.meta.env.PROD 
+  ? "https://your-backend-service-name.onrender.com" 
+  : "http://localhost:5000";
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for reaching out! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Thank you! Your message has been sent. Please check your email for a confirmation.");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        console.error("Backend Error:", data);
+        alert(data.error || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Network Error:", error);
+      alert("Could not connect to the server. Please ensure your backend is running.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -47,6 +80,7 @@ const ContactUs = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -58,6 +92,7 @@ const ContactUs = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -68,6 +103,7 @@ const ContactUs = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -79,13 +115,15 @@ const ContactUs = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none resize-none"
+                    disabled={isSubmitting}
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit
+                  {isSubmitting ? "Sending..." : "Submit"}
                 </button>
               </form>
             </motion.div>

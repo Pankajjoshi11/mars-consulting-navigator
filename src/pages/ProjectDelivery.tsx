@@ -14,9 +14,9 @@ const stagger = {
 
 const ProjectDelivery = () => {
   const steps = [
-    { num: "01", title: "Discover & Analyse", desc: "Clarify objectives, constraints, and stakeholder needs.", icon: Lightbulb },
+    { num: "01", title: "Discover & Analyse", desc: "Clarify objectives, constraints and stakeholder needs.", icon: Lightbulb },
     { num: "02", title: "Purpose Driven Solution", desc: "Select or design solutions that align to context and goals.", icon: Target },
-    { num: "03", title: "Plan", desc: "Milestones, budget, resourcing, and risk/governance.", icon: CalendarCheck },
+    { num: "03", title: "Plan", desc: "Milestones, budget, resourcing and governance", icon: CalendarCheck },
     { num: "04", title: "Deliver", desc: "Focused execution with transparent reporting.", icon: Rocket },
     { num: "05", title: "Value Realisation & Hypercare", desc: "Adoption, stabilisation, and measurable outcomes.", icon: ShieldCheck },
   ];
