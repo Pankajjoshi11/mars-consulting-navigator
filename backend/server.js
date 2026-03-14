@@ -6,13 +6,15 @@ import 'dotenv/config';
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwp10ISHEru_TezeXo3Iu_QV1F7vhOpQO_MRfPzqT9kK5MAJmUgigeSRasUBUguZo6jjA/exec";
+
 // 1. Production-ready CORS configuration
 app.use(cors({
   origin: [
     'http://localhost:8081', 
     'http://localhost:5173', 
     'https://mars-consulting.pages.dev',
-    'https://mars-consulting-navigator.vercel.app', // Your live frontend
+    'https://mars-consulting-navigator.vercel.app', 
   ],
   methods: ["POST", "GET", "OPTIONS"],
   credentials: true
@@ -64,6 +66,23 @@ app.post('/api/send', async (req, res) => {
         </div>`
     });
 
+    // 4. Log Lead to Google Sheets
+    // We use a separate try-catch so if the sheet fails, the user still gets their confirmation email
+    try {
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        mode: "no-cors", // Helps with Google Apps Script redirects
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify({ name, email, phone, message }),
+      });
+      console.log("Lead successfully logged to Google Sheets");
+    } catch (sheetError) {
+      console.error("Google Sheets Logging Error:", sheetError);
+      // We don't throw here so the main response remains success: true
+    }
+
     res.status(200).json({ success: true });
   } catch (error) {
     console.error("Resend Error:", error);
@@ -71,11 +90,11 @@ app.post('/api/send', async (req, res) => {
   }
 });
 
-// 4. Wrap listen in a check for local development
+// 5. Wrap listen in a check for local development
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-// 5. Export for Vercel
+// 6. Export for Vercel
 export default app;
