@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin } from "lucide-react";
+import { toast } from "sonner"; // 1. Import toast from sonner
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,30 +24,35 @@ const ContactUs = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/send`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+    // 2. Use toast.promise for a high-end Loading -> Success/Error flow
+    toast.promise(
+      async () => {
+        const response = await fetch(`${BACKEND_URL}/api/send`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        alert("Thank you! Your message has been sent. Please check your email for a confirmation.");
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to send message");
+        }
+        
+        // Clear form on success
         setFormData({ name: "", email: "", phone: "", message: "" });
-      } else {
-        console.error("Backend Error:", data);
-        alert(data.error || "Failed to send message. Please try again.");
+        return data;
+      },
+      {
+        loading: 'Sending your inquiry to Mars Consulting...',
+        success: 'Thank you! Your message has been sent successfully.',
+        error: (err) => `${err.message}`,
       }
-    } catch (error) {
-      console.error("Network Error:", error);
-      alert("Could not connect to the server. Please ensure your backend is running.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    );
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -77,9 +83,10 @@ const ContactUs = () => {
                     type="text"
                     required
                     maxLength={100}
+                    placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -89,9 +96,10 @@ const ContactUs = () => {
                     type="email"
                     required
                     maxLength={255}
+                    placeholder="john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -100,9 +108,10 @@ const ContactUs = () => {
                   <input
                     type="tel"
                     maxLength={20}
+                    placeholder="+91 ..."
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -112,18 +121,19 @@ const ContactUs = () => {
                     required
                     maxLength={1000}
                     rows={5}
+                    placeholder="How can we help you?"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none resize-none transition-all"
                     disabled={isSubmitting}
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "Sending..." : "Submit"}
+                  {isSubmitting ? "Processing..." : "Submit"}
                 </button>
               </form>
             </motion.div>
@@ -133,20 +143,20 @@ const ContactUs = () => {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-2 bg-primary rounded-2xl p-8 text-primary-foreground h-fit"
+              className="lg:col-span-2 bg-primary rounded-2xl p-8 text-primary-foreground h-fit shadow-lg"
             >
               <h3 className="text-xl font-bold mb-6">Our Presence</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 mt-1 shrink-0" />
+                  <MapPin className="w-5 h-5 mt-1 shrink-0 text-accent" />
                   <p className="text-primary-foreground/80 text-sm leading-relaxed">
                     Pune, Maharashtra, India<br />
                     Sydney/Newcastle, NSW, Australia
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 shrink-0" />
-                  <a href="mailto:info@marsconsulting.in" className="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">
+                  <Mail className="w-5 h-5 shrink-0 text-accent" />
+                  <a href="mailto:info@marsconsulting.in" className="text-primary-foreground/80 hover:text-white text-sm transition-colors">
                     info@marsconsulting.in
                   </a>
                 </div>

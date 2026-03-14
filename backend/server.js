@@ -12,18 +12,24 @@ app.use(cors({
     'http://localhost:8081', 
     'http://localhost:5173', 
     'https://mars-consulting.pages.dev',
-    'https://mars-consulting-navigator.vercel.app' // Your live frontend
-  ] 
+    'https://mars-consulting-navigator.vercel.app', // Your live frontend
+  ],
+  methods: ["POST", "GET", "OPTIONS"],
+  credentials: true
 }));
 
 app.use(express.json());
+
+// Health check route for testing
+app.get('/', (req, res) => {
+  res.status(200).send('Mars Consulting API is running');
+});
 
 app.post('/api/send', async (req, res) => {
   const { name, email, phone, message } = req.body;
 
   try {
     // 2. Internal Notification (Sent to you)
-    // Uses your verified root domain marsconsulting.in
     await resend.emails.send({
       from: 'Mars Website <info@marsconsulting.in>', 
       to: 'info@marsconsulting.in',
@@ -43,7 +49,7 @@ app.post('/api/send', async (req, res) => {
     await resend.emails.send({
       from: 'Mars Consulting <info@marsconsulting.in>', 
       to: email,
-      reply_to: 'info@marsconsulting.in', // Directs replies to your main inbox
+      reply_to: 'info@marsconsulting.in', 
       subject: 'We have received your inquiry - Mars Consulting',
       html: `
         <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
@@ -65,5 +71,11 @@ app.post('/api/send', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// 4. Wrap listen in a check for local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+// 5. Export for Vercel
+export default app;
