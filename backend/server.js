@@ -71,11 +71,11 @@ app.post('/api/send', async (req, res) => {
     try {
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
-        mode: "no-cors", // Helps with Google Apps Script redirects
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type": "application/json", // Match the JSON.parse in your script
         },
         body: JSON.stringify({ name, email, phone, message }),
+        redirect: "follow" 
       });
       console.log("Lead successfully logged to Google Sheets");
     } catch (sheetError) {
