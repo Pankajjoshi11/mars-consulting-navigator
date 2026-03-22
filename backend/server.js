@@ -6,7 +6,7 @@ import 'dotenv/config';
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwp10ISHEru_TezeXo3Iu_QV1F7vhOpQO_MRfPzqT9kK5MAJmUgigeSRasUBUguZo6jjA/exec";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxtUmxVNYAGsXK8Gji47-gT0U7_ViImUDDCLNBr5-HAE2qrDfev72IZl4Cj1SHycquo/exec";
 
 // 1. Production-ready CORS configuration
 app.use(cors({
