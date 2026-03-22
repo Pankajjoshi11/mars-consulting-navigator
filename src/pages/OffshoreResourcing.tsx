@@ -264,7 +264,7 @@ const OffshoreResourcing = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Resources</label>
+                    <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Team Size</label>
                     <input
                       type="number"
                       min={1}
