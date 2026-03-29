@@ -1,10 +1,10 @@
 import { useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, DollarSign, TrendingDown, BarChart3, Download, Info } from "lucide-react";
+import { CheckCircle, TrendingDown, BarChart3, Download, Info } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import offshoreHero from "@/assets/offshore-hero.jpg";
+import offshoreHero from "@/assets/TalentPage.jpeg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -129,33 +129,51 @@ const OffshoreResourcing = () => {
   return (
     <div className="pt-16">
       {/* Hero */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 lg:hidden">
-          <img src={offshoreHero} alt="Offshore team collaboration" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-primary/80" />
-        </div>
+      <section className="relative min-h-[72vh] overflow-hidden">
+        <img
+          src={offshoreHero}
+          alt="Offshore team collaboration"
+          className="absolute inset-0 h-full w-full object-cover object-[60%_center] md:object-[58%_center] lg:object-[56%_center]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/88 via-primary/65 to-primary/18" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
 
-        <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 min-h-[70vh]">
-          <div className="hidden lg:block relative">
-            <img src={offshoreHero} alt="Offshore team collaboration" className="w-full h-full object-cover absolute inset-0" />
-            <div className="absolute inset-0 bg-primary/30" />
-          </div>
-
-          <div className="flex items-center px-6 lg:px-16 py-16 lg:py-0 bg-transparent lg:bg-secondary">
-            <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-xl">
-              <motion.p variants={fadeInUp} className="text-sm font-semibold tracking-widest uppercase mb-2 text-primary-foreground lg:text-primary">
+        <div className="relative z-10 flex min-h-[72vh] items-center px-6 py-12 md:px-12 lg:px-16 lg:py-16">
+          <div className="w-full">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+              className="max-w-2xl rounded-[1.75rem] border border-white/12 bg-primary/35 p-8 shadow-2xl backdrop-blur-sm md:p-10 lg:ml-0"
+            >
+              <motion.p variants={fadeInUp} className="mb-4 text-sm font-semibold tracking-[0.3em] uppercase text-white/75">
                 Services
               </motion.p>
-              <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl font-bold mb-4 text-primary-foreground lg:text-foreground">
+              <motion.h1 variants={fadeInUp} className="mb-4 text-4xl font-bold leading-tight text-white md:text-6xl">
                 Offshore Resourcing
               </motion.h1>
-              <motion.h2 variants={fadeInUp} className="text-xl mb-6 font-medium leading-relaxed text-primary-foreground lg:text-foreground/80">
-                Scale your team with contract‑based offshore specialists.
+              <motion.h2 variants={fadeInUp} className="mb-6 max-w-2xl text-xl font-medium leading-relaxed text-white/90 md:text-2xl">
+                Scale your team with contract-based offshore specialists.
               </motion.h2>
-              <motion.p variants={fadeInUp} className="leading-relaxed text-primary-foreground/90 lg:text-muted-foreground">
+              <motion.p variants={fadeInUp} className="max-w-2xl leading-relaxed text-white/80 md:text-lg">
                 Access skilled Developers, Testers, Data Analysts and PMO/Project Admin resources who integrate with
                 your ways of working — contracted for the life of your project.
               </motion.p>
+
+              <motion.div variants={fadeInUp} className="mt-8 grid gap-3 sm:grid-cols-3">
+                {[
+                  "Contract-based specialists",
+                  "Faster team scale-up",
+                  "Aligned to your delivery rhythm",
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/12 bg-white/8 px-4 py-4">
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/12">
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                    <p className="text-sm font-medium leading-relaxed text-white/90">{item}</p>
+                  </div>
+                ))}
+              </motion.div>
             </motion.div>
           </div>
         </div>

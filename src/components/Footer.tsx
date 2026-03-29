@@ -39,17 +39,33 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h4 className="font-semibold mb-4">Our Presence</h4>
-            <div className="space-y-3 text-sm text-primary-foreground/70">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
-                <span>Pune, Maharashtra, India • Sydney/Newcastle, NSW, Australia</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 shrink-0" />
-                <a href="mailto:info@marsconsulting.in" className="hover:text-primary-foreground transition-colors">
-                  info@marsconsulting.in
-                </a>
-              </div>
+            <div className="space-y-4 text-sm text-primary-foreground/70">
+              {[
+                {
+                  location: "Pune, Maharashtra, India",
+                  email: "info@marsconsulting.in",
+                },
+                {
+                  location: "Sydney/Newcastle, NSW, Australia",
+                  email: "info@mars-consulting.com.au",
+                },
+              ].map((office) => (
+                <div key={office.location} className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>{office.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 shrink-0" />
+                    <a
+                      href={`mailto:${office.email}`}
+                      className="hover:text-primary-foreground transition-colors"
+                    >
+                      {office.email}
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

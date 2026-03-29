@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
-import aboutTeam from "@/assets/about-team.jpg";
+import aboutTeam from "@/assets/HomePage.jpeg";
 import iconFit from "@/assets/icon-fit.jpg";
 import iconDelivery from "@/assets/icon-delivery.jpg";
 import iconOffshore from "@/assets/icon-offshore.jpg";
@@ -20,6 +20,24 @@ const stagger = {
 
 const Index = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [selectedOffice, setSelectedOffice] = useState<"pune" | "australia">("pune");
+
+  const offices = [
+    {
+      id: "pune" as const,
+      location: "Pune, Maharashtra, India",
+      email: "info@marsconsulting.in",
+      mapEmbedUrl:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.204898!2d73.856743!3d18.520430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c07f4e4f0e0d%3A0x4f0e4e4e4e4e4e4e!2sPune%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1690000000000",
+    },
+    {
+      id: "australia" as const,
+      location: "Sydney/Newcastle, NSW, Australia",
+      email: "info@mars-consulting.com.au",
+      mapEmbedUrl:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d212795.48699639665!2d150.52092912650396!3d-33.010126486548835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b7313c1074cc4f9%3A0xc773bf8e128c0f36!2sNewcastle%20NSW%2C%20Australia!5e0!3m2!1sen!2sin!4v1774828266000",
+    },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +72,7 @@ const Index = () => {
               Get in Touch
             </Link>
             <Link
-              to="/services/project-delivery"
+              to="/#what-we-do"
               className="px-8 py-3 border-2 border-primary-foreground/30 text-primary-foreground rounded-lg font-semibold hover:bg-primary-foreground/10 transition-colors"
             >
               Explore Services
@@ -94,7 +112,7 @@ const Index = () => {
       </section>
 
       {/* What We Do */}
-      <section className="section-padding bg-secondary">
+      <section id="what-we-do" className="section-padding scroll-mt-24 bg-secondary">
         <div className="container-mars">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-12">
             <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -271,25 +289,41 @@ const Index = () => {
               className="lg:col-span-2 bg-primary rounded-2xl p-8 text-primary-foreground flex flex-col"
             >
               <h3 className="text-xl font-bold mb-6">Our Presence</h3>
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 mt-1 shrink-0" />
-                  <p className="text-primary-foreground/80 text-sm leading-relaxed">
-                    Pune, Maharashtra, India<br />
-                    Sydney/Newcastle, NSW, Australia
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 shrink-0" />
-                  <a href="mailto:info@marsconsulting.in" className="text-primary-foreground/80 hover:text-primary-foreground text-sm transition-colors">
-                    info@marsconsulting.in
-                  </a>
-                </div>
+              <div className="space-y-4">
+                {offices.map((office) => (
+                  <button
+                    key={office.id}
+                    type="button"
+                    onClick={() => setSelectedOffice(office.id)}
+                    className={`w-full rounded-xl border p-4 text-left transition-colors ${
+                      selectedOffice === office.id
+                        ? "border-white/30 bg-white/12"
+                        : "border-primary-foreground/10 bg-white/5 hover:bg-white/8"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <MapPin className="w-5 h-5 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-primary-foreground">{office.location}</p>
+                        <div className="mt-2 flex items-center gap-2 text-sm text-primary-foreground/80">
+                          <Mail className="w-4 h-4 shrink-0" />
+                          <a
+                            href={`mailto:${office.email}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="hover:text-primary-foreground transition-colors"
+                          >
+                            {office.email}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
-              <div className="mt-6 rounded-xl overflow-hidden border border-primary-foreground/10 flex-1 min-h-[200px]">
+              <div className="mt-6 rounded-xl overflow-hidden border border-primary-foreground/10 flex-1 min-h-[240px]">
                 <iframe
-                  title="Our locations"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.204898!2d73.856743!3d18.520430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c07f4e4f0e0d%3A0x4f0e4e4e4e4e4e4e!2sPune%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1690000000000"
+                  title={`${selectedOffice === "pune" ? "Pune" : "Australia"} office map`}
+                  src={offices.find((office) => office.id === selectedOffice)?.mapEmbedUrl}
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: "grayscale(0.3) contrast(1.1)" }}

@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import aboutGrid from "@/assets/about-grid.jpg";
-import aboutTeam from "@/assets/about-team.jpg";
+import aboutGrid from "@/assets/AboutUs1.jpeg";
+import aboutTeam from "@/assets/AboutUs2.jpeg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -60,24 +60,49 @@ const AboutUs = () => {
   return (
     <div className="pt-16">
       {/* Hero */}
-      <section className="section-padding bg-card">
+      <section className="section-padding bg-card overflow-hidden">
         <div className="container-mars">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7 }}
+              className="relative"
             >
-              <img src={aboutGrid} alt="About Mars Consulting" className="rounded-2xl shadow-lg w-full" />
+              <div className="relative overflow-hidden rounded-[2.25rem] shadow-[0_28px_70px_rgba(30,41,59,0.16)]">
+                <img
+                  src={aboutGrid}
+                  alt="About Mars Consulting"
+                  className="h-[360px] w-full object-cover md:h-[460px] lg:h-[560px]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/15 via-transparent to-transparent" />
+              </div>
+              <div className="absolute -bottom-5 right-6 rounded-[1.5rem] bg-white/92 px-5 py-4 shadow-xl backdrop-blur-sm md:right-10">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">About Us</p>
+                <p className="mt-2 text-sm font-medium text-foreground">Strategy, delivery and value realisation.</p>
+              </div>
             </motion.div>
-            <motion.div initial="hidden" animate="visible" variants={stagger}>
-              <motion.h1 variants={fadeInUp} className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                Your partner from strategy to value realisation.
-              </motion.h1>
-              <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed text-lg">
-                Mars Consulting is a consulting firm specialising in project implementation and offshore resourcing.
-                We partner with you at every step, so delivery is not only completed, but adopted, supported and measured.
-              </motion.p>
+
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+              className="relative lg:pl-6"
+            >
+              <div className="absolute -left-2 top-0 hidden h-24 w-24 rounded-full bg-accent/10 lg:block" />
+              <div className="relative rounded-[2rem] bg-secondary px-8 py-10 md:px-10 md:py-12">
+                <motion.p variants={fadeInUp} className="mb-4 text-sm font-semibold tracking-[0.28em] uppercase text-accent">
+                  Our Story
+                </motion.p>
+                <motion.h1 variants={fadeInUp} className="mb-6 text-3xl font-bold leading-tight text-foreground md:text-5xl">
+                  Your partner from strategy to value realisation.
+                </motion.h1>
+                <motion.p variants={fadeInUp} className="text-lg leading-relaxed text-muted-foreground">
+                  Mars Consulting is a consulting firm specialising in project implementation and offshore resourcing.
+                  We partner with you at every step, so delivery is not only completed, but adopted, supported and measured.
+                </motion.p>
+                <motion.div variants={fadeInUp} className="mt-8 h-px w-24 bg-accent/40" />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -138,40 +163,6 @@ const AboutUs = () => {
                 transition={{ delay: i * 0.1 }}
               >
                 <FlipCard title={v.title} desc={v.desc} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Offshore Stats */}
-      <section className="section-padding bg-primary">
-        <div className="container-mars text-center">
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="text-3xl md:text-4xl font-bold text-primary-foreground mb-12"
-          >
-            Why Offshore?
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { stat: "40–60%", label: "Typical cost savings vs local teams" },
-              { stat: "Rapid", label: "Scale-up without lengthy recruitment cycles" },
-              { stat: "Global", label: "Access to a deep pool of specialised talent" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.stat}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="bg-card/10 backdrop-blur-sm rounded-2xl p-8 border border-primary-foreground/10"
-              >
-                <p className="text-4xl md:text-5xl font-bold text-primary-foreground mb-3">{item.stat}</p>
-                <p className="text-primary-foreground/80 text-base">{item.label}</p>
               </motion.div>
             ))}
           </div>
