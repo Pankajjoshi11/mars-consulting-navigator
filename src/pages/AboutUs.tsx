@@ -117,13 +117,13 @@ const AboutUs = () => {
                 A Consulting Firm Built on Delivery
               </motion.h2>
               <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed mb-4">
-                Mars Consulting was founded on a simple belief: that great consulting is about more than advice — it's about walking alongside clients through the full journey of transformation and delivery.
+                Mars Consulting was founded on a simple belief: that great consulting is not just about advice, it's about walking alongside clients through the full journey of transformation and delivery.
               </motion.p>
               <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed mb-4">
                 We bring together experienced project delivery professionals and a vetted offshore talent network to give organisations the execution capability they need, when they need it.
               </motion.p>
               <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed">
-                Our value-driven approach means we are always focused on outcomes — not just outputs. We measure success by the value realised, the adoption achieved, and the confidence our clients feel at every stage.
+                Our value-driven approach means we are always focused on outcomes and not just outputs. We measure success by the value realised, the adoption achieved, and the confidence our clients feel at every stage.
               </motion.p>
             </motion.div>
             <motion.div
