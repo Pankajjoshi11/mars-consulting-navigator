@@ -168,7 +168,7 @@ const OffshoreResourcing = () => {
       <section className="section-padding bg-white text-primary">
         <div className="container-mars">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Strategic Savings Calculator</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4"> Savings Calculator</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Compare "Fully Loaded" local hiring costs—including 2026 superannuation and payroll taxes—against our managed offshore model.
             </p>
