@@ -26,14 +26,14 @@ const Index = () => {
     {
       id: "pune" as const,
       location: "Pune, Maharashtra, India",
-      email: "info@marsconsulting.in",
+      email: "aditya@marsconsulting.in",
       mapEmbedUrl:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.204898!2d73.856743!3d18.520430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c07f4e4f0e0d%3A0x4f0e4e4e4e4e4e4e!2sPune%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1690000000000",
     },
     {
       id: "australia" as const,
       location: "Sydney/Newcastle, NSW, Australia",
-      email: "info@mars-consulting.com.au",
+      email: "aditya@mars-consulting.com.au",
       mapEmbedUrl:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d212795.48699639665!2d150.52092912650396!3d-33.010126486548835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b7313c1074cc4f9%3A0xc773bf8e128c0f36!2sNewcastle%20NSW%2C%20Australia!5e0!3m2!1sen!2sin!4v1774828266000",
     },
@@ -123,7 +123,7 @@ const Index = () => {
             {[
               {
                 title: "Project Delivery Services",
-                desc: "Business analysis, solution fit planning, execution and hypercare — we partner with you at every step to deliver the right outcomes.",
+                desc: "Business analysis, solution fit planning, execution and hypercare we partner with you at every step to deliver the right outcomes.",
                 link: "/services/project-delivery",
               },
               {

@@ -43,11 +43,11 @@ const Footer = () => {
               {[
                 {
                   location: "Pune, Maharashtra, India",
-                  email: "info@marsconsulting.in",
+                  email: "aditya@marsconsulting.in",
                 },
                 {
                   location: "Sydney/Newcastle, NSW, Australia",
-                  email: "info@mars-consulting.com.au",
+                  email: "aditya@mars-consulting.com.au",
                 },
               ].map((office) => (
                 <div key={office.location} className="space-y-2">

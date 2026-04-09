@@ -14,11 +14,11 @@ const stagger = {
 
 const ProjectDelivery = () => {
   const steps = [
-    { num: "01", title: "Discover & Analyse", desc: "Clarify objectives, constraints and stakeholder needs." },
+    { num: "01", title: "Discover & Analyse", desc: "Clarify objectives, constraints and business needs." },
     { num: "02", title: "Purpose Driven Solution", desc: "Select or design solutions that align to context and goals." },
     { num: "03", title: "Plan", desc: "Milestones, budget, resourcing and governance." },
     { num: "04", title: "Deliver", desc: "Focused execution with transparent reporting." },
-    { num: "05", title: "Value Realisation & Hypercare", desc: "Adoption, stabilisation, and measurable outcomes." },
+    { num: "05", title: "Value Realisation & Hypercare", desc: "Adoption, stabilisation and measurable outcomes." },
   ];
 
   return (
@@ -42,8 +42,8 @@ const ProjectDelivery = () => {
             </motion.h2>
             <motion.p variants={fadeInUp} className="text-primary-foreground/70 leading-relaxed">
               We start by understanding your business landscape and operating environment, then define a fit‑for‑purpose
-              solution. From there, we map milestones, budget and resources, execute with focus, and provide hypercare to
-              ensure value is realised — not just delivered.
+              solution. From there, we map milestones, budget and resources, execute with focus and provide hypercare to
+              ensure value is realised not just delivered.
             </motion.p>
           </motion.div>
         </div>
@@ -120,7 +120,7 @@ const ProjectDelivery = () => {
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
             {[
               "Project & Program Management",
-              "Change Management (reduce resistance, drive adoption)",
+              "Change Management (reduce resistance and drive adoption)",
             ].map((cap, i) => (
               <motion.div
                 key={cap}
