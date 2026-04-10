@@ -16,9 +16,9 @@ const stagger = {
 
 const values = [
   { title: "Value-Driven", desc: "Every engagement is designed around measurable outcomes, not just deliverables." },
-  { title: "Fit-for-Purpose", desc: "Solutions shaped to your context — not a one-size-fits-all approach." },
+  { title: "Fit-for-Purpose", desc: "Solutions shaped to your context, not a one-size-fits-all approach." },
   { title: "Partnership", desc: "We walk with clients at every step of delivery, from strategy to hypercare." },
-  { title: "Transparency", desc: "Clear communication, honest timelines, and full visibility throughout." },
+  { title: "Transparency", desc: "Clear communication, honest timelines and full visibility throughout." },
 ];
 
 const FlipCard = ({ title, desc }: { title: string; desc: string }) => {
@@ -123,7 +123,7 @@ const AboutUs = () => {
                 We bring together experienced project delivery professionals and a vetted offshore talent network to give organisations the execution capability they need, when they need it.
               </motion.p>
               <motion.p variants={fadeInUp} className="text-muted-foreground leading-relaxed">
-                Our value-driven approach means we are always focused on outcomes and not just outputs. We measure success by the value realised, the adoption achieved, and the confidence our clients feel at every stage.
+                Our value-driven approach means we are always focused on outcomes and not just outputs. We measure success by the value realised, the adoption achieved and the confidence our clients feel at every stage.
               </motion.p>
             </motion.div>
             <motion.div

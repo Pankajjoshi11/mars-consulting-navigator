@@ -170,7 +170,7 @@ const OffshoreResourcing = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4"> Savings Calculator</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Compare "Fully Loaded" local hiring costs—including 2026 superannuation and payroll taxes—against our managed offshore model.
+              Compare "Fully Loaded" local hiring costs, including 2026 superannuation and payroll taxes against our managed offshore model.
             </p>
           </motion.div>
 
@@ -309,7 +309,7 @@ const OffshoreResourcing = () => {
                  </button>
                  
                  <p className="text-[10px] text-slate-400 italic leading-relaxed text-center max-w-lg">
-                    "Estimates provided are based on 2026 median salary data from global recruitment benchmarks and mandatory statutory employer on-costs. Actual savings may vary based on specific tech stack requirements and chosen engagement model."
+                    "Estimates provided are based on 2026 median salary data from global recruitment benchmarks and mandatory statutory employer on-costs. Actual savings may vary based on specific tech stack requirements, seniority, and chosen engagement model."
                  </p>
               </div>
             </div>
