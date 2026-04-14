@@ -4,7 +4,7 @@ import { CheckCircle, TrendingDown, BarChart3, Download, Info } from "lucide-rea
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import offshoreHero from "@/assets/TalentPage.jpeg";
+import offshoreHero from "@/assets/TalentPage.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -30,8 +30,8 @@ const OFFSHORE_ANNUAL_COST = 45000;
 const OffshoreResourcing = () => {
   const [serviceType, setServiceType] = useState("Full-Stack Developer");
   const [targetCountry, setTargetCountry] = useState("Australia");
-  const [devs, setDevs] = useState(5);
-  const [months, setMonths] = useState(12);
+  const [devs, setDevs] = useState("");
+  const [months, setMonths] = useState("");
   const [showResults, setShowResults] = useState(false);
   
   const reportRef = useRef<HTMLDivElement>(null);
@@ -40,8 +40,7 @@ const OffshoreResourcing = () => {
   const calculations = useMemo(() => {
     const baseSalary = salaryData[serviceType][targetCountry] || 100000;
     
-    // 2026 "Fully Loaded" Multiplier: Includes 12% Superannuation + Payroll Tax + Overhead
-    // High-cost markets (AU/US/NZ) typically hit 1.4x true cost
+    // 2026 "Fully Loaded" Multiplier
     const tcoFactor = (targetCountry === "Australia" || targetCountry === "US" || targetCountry === "New Zealand") ? 1.40 : 1.30; 
     
     const localMonthlyCost = (baseSalary * tcoFactor) / 12;
@@ -50,7 +49,9 @@ const OffshoreResourcing = () => {
     const localTotal = localMonthlyCost * devs * months;
     const offshoreTotal = offshoreMonthlyCost * devs * months;
     const totalSavings = localTotal - offshoreTotal;
-    const savingsPercent = Math.round((totalSavings / localTotal) * 100);
+    
+    // Prevent Division by Zero for savings percent
+    const savingsPercent = localTotal > 0 ? Math.round((totalSavings / localTotal) * 100) : 0;
 
     return { localTotal, offshoreTotal, totalSavings, savingsPercent, baseSalary, tcoFactor };
   }, [serviceType, targetCountry, devs, months]);
@@ -214,9 +215,9 @@ const OffshoreResourcing = () => {
                     <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Team Size</label>
                     <input
                       type="number"
-                      min={1}
+                      min={0}
                       value={devs}
-                      onChange={(e) => setDevs(Math.max(1, Number(e.target.value)))}
+                      onChange={(e) => setDevs(Number(e.target.value))}
                       className="w-full px-4 py-3 bg-white border border-border rounded-xl text-primary focus:ring-2 focus:ring-accent"
                     />
                   </div>
@@ -224,9 +225,9 @@ const OffshoreResourcing = () => {
                     <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Duration (Mo)</label>
                     <input
                       type="number"
-                      min={1}
+                      min={0}
                       value={months}
-                      onChange={(e) => setMonths(Math.max(1, Number(e.target.value)))}
+                      onChange={(e) => setMonths(Number(e.target.value))}
                       className="w-full px-4 py-3 bg-white border border-border rounded-xl text-primary focus:ring-2 focus:ring-accent"
                     />
                   </div>
@@ -249,7 +250,7 @@ const OffshoreResourcing = () => {
                 onClick={() => setShowResults(true)}
                 className="w-full py-4 bg-accent text-accent-foreground rounded-xl font-bold hover:opacity-90 transition-all active:scale-[0.98]"
               >
-                Calculate ROI
+                Calculate Savings
               </button>
             </div>
 

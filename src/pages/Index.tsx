@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Mail, MapPin, TrendingDown } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner"; 
 import heroBg from "@/assets/hero-bg.jpg";
-import aboutTeam from "@/assets/HomePage.jpeg";
+import aboutTeam from "@/assets/HomePage.jpg";
 import iconFit from "@/assets/icon-fit.jpg";
 import iconDelivery from "@/assets/icon-delivery.jpg";
 import iconOffshore from "@/assets/icon-offshore.jpg";
@@ -18,8 +19,12 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.15 } },
 };
 
+// Backend URL pointing to your Vercel deployment
+const BACKEND_URL = "https://mars-consulting-navigator-ey2f.vercel.app";
+
 const Index = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedOffice, setSelectedOffice] = useState<"pune" | "australia">("pune");
 
   const offices = [
@@ -27,23 +32,45 @@ const Index = () => {
       id: "pune" as const,
       location: "Pune, Maharashtra, India",
       email: "aditya@marsconsulting.in",
-      mapEmbedUrl:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.204898!2d73.856743!3d18.520430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c07f4e4f0e0d%3A0x4f0e4e4e4e4e4e4e!2sPune%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1690000000000",
-    },
-    {
-      id: "australia" as const,
-      location: "Sydney/Newcastle, NSW, Australia",
-      email: "aditya@mars-consulting.com.au",
-      mapEmbedUrl:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d212795.48699639665!2d150.52092912650396!3d-33.010126486548835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b7313c1074cc4f9%3A0xc773bf8e128c0f36!2sNewcastle%20NSW%2C%20Australia!5e0!3m2!1sen!2sin!4v1774828266000",
+      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.0471243183!2d73.78051792435773!3d18.52476127117188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67414509%3A0x5300d8a0c6418854!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1712345678901!5m2!1sen!2sin",
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert("Thank you for reaching out! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setIsSubmitting(true);
+
+    // Using toast.promise to match your ContactUs flow
+    toast.promise(
+      async () => {
+        const response = await fetch(`${BACKEND_URL}/api/send`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to send message");
+        }
+        
+        // Reset form on success
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setIsSubmitting(false);
+        return data;
+      },
+      {
+        loading: 'Sending your inquiry to Mars Consulting...',
+        success: 'Thank you! Your message has been sent successfully.',
+        error: (err) => {
+          setIsSubmitting(false);
+          return `${err.message}`;
+        },
+      }
+    );
   };
 
   return (
@@ -228,59 +255,66 @@ const Index = () => {
               className="lg:col-span-3 bg-card rounded-2xl p-8 shadow-sm"
             >
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Name</label>
-                  <input
-                    type="text"
-                    required
-                    maxLength={100}
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">Email</label>
-                  <input
-                    type="email"
-                    required
-                    maxLength={255}
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1">Name</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your Name"
+                      maxLength={100}
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1">Email</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="email@example.com"
+                      maxLength={255}
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Phone No</label>
                   <input
                     type="tel"
+                    placeholder="Optional"
                     maxLength={20}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none transition-all"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1">Message</label>
                   <textarea
                     required
+                    placeholder="How can we help you?"
                     maxLength={1000}
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-accent focus:outline-none resize-none transition-all"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:bg-accent/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  Submit
+                  {isSubmitting ? "Sending..." : "Submit Message"}
                 </button>
               </form>
             </motion.div>
 
-            {/* Presence */}
+            {/* Presence Section */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}

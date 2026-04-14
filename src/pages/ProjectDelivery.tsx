@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import projectDeliveryHero from "@/assets/ProjectDel.jpeg";
+import projectDeliveryHero from "@/assets/ProjectDel.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },

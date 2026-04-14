@@ -154,10 +154,6 @@ const ContactUs = () => {
                     location: "Pune, Maharashtra, India",
                     email: "aditya@marsconsulting.in",
                   },
-                  {
-                    location: "Sydney/Newcastle, NSW, Australia",
-                    email: "aditya@mars-consulting.com.au",
-                  },
                 ].map((office) => (
                   <div key={office.location} className="rounded-[1.5rem] border border-border bg-secondary p-5">
                     <div className="flex items-start gap-3">

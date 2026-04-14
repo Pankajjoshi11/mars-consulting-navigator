@@ -44,11 +44,7 @@ const Footer = () => {
                 {
                   location: "Pune, Maharashtra, India",
                   email: "aditya@marsconsulting.in",
-                },
-                {
-                  location: "Sydney/Newcastle, NSW, Australia",
-                  email: "aditya@mars-consulting.com.au",
-                },
+                }
               ].map((office) => (
                 <div key={office.location} className="space-y-2">
                   <div className="flex items-start gap-2">

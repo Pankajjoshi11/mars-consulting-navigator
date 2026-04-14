@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import aboutGrid from "@/assets/AboutUs1.jpeg";
-import aboutTeam from "@/assets/AboutUs2.jpeg";
+import aboutGrid from "@/assets/AboutUs1.jpg";
+import aboutTeam from "@/assets/AboutUs2.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
