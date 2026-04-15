@@ -15,7 +15,7 @@ app.use(cors({
     'http://localhost:5173', 
     'https://mars-consulting.pages.dev',
     'https://mars-consulting-navigator.vercel.app', 
-    'https://marsconsulting.in/',
+    'https://marsconsulting.in',
   ],
   methods: ["POST", "GET", "OPTIONS"],
   credentials: true
