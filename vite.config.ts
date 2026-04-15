@@ -4,7 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => {
-  // Move the logic here to keep the return object "flat"
   const plugins = [react()];
   
   if (mode === "development") {
@@ -12,6 +11,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    base: "/",  // 👈 add this line
     server: {
       host: "::",
       port: 8080,
@@ -19,10 +19,19 @@ export default defineConfig(({ mode }) => {
         overlay: false,
       },
     },
-    plugins: plugins, // Now it's a simple variable reference
+    plugins: plugins,
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+      },
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ["react", "react-dom"],
+          },
+        },
       },
     },
   };
