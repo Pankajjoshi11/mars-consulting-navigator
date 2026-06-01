@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import marsLogo from "@/assets/Mars Consulting Logo - No Background.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -28,7 +29,12 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-md border-b border-primary-foreground/10">
       <div className="container-mars flex items-center justify-between h-16 px-6 lg:px-20">
         {/* Logo */}
-        <Link to="/" className="text-primary-foreground text-xl font-bold tracking-tight">
+        <Link to="/" className="flex items-center gap-3 text-primary-foreground text-xl font-bold tracking-tight">
+          <img
+            src={marsLogo}
+            alt="Mars Consulting logo"
+            className="h-9 w-9 rounded-full object-contain"
+          />
           Mars Consulting
         </Link>
 

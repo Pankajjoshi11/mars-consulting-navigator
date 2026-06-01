@@ -1,9 +1,7 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, TrendingDown, BarChart3, Download, Info, RefreshCw, AlertCircle } from "lucide-react";
+import { CheckCircle, TrendingDown, BarChart3, Info, RefreshCw, AlertCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import offshoreHero from "@/assets/TalentPage.jpg";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -261,7 +259,6 @@ const OffshoreResourcing = () => {
   const [months, setMonths] = useState<string>("");
   const [showResults, setShowResults] = useState(false);
   const [showDebug, setShowDebug] = useState(false);
-  const reportRef = useRef<HTMLDivElement>(null);
 
   // Reset role when country changes
   useEffect(() => {
@@ -323,72 +320,6 @@ const OffshoreResourcing = () => {
       currency: currency === "NZD" ? "NZD" : "AUD",
       maximumFractionDigits: 0,
     }).format(n);
-
-  // ── PDF Export ────────────────────────────────────────────────────────────
-  const downloadPDF = async () => {
-    if (!reportRef.current) return;
-    const canvas = await html2canvas(reportRef.current, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(20);
-    pdf.setTextColor(30, 41, 59);
-    pdf.text("Mars Consulting: ROI Analysis Report", 15, 20);
-
-    pdf.setFontSize(12);
-    pdf.text("Project Configuration:", 15, 35);
-
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(10);
-    pdf.setTextColor(100, 116, 139);
-
-    const inputY = 42;
-    const lh = 7;
-    pdf.text(`• Role: ${serviceType}`, 20, inputY);
-    pdf.text(`• Target Market: ${targetCountry}`, 20, inputY + lh);
-    pdf.text(`• Team Size: ${devs} Resource(s)`, 20, inputY + lh * 2);
-    pdf.text(`• Duration: ${months} Months`, 20, inputY + lh * 3);
-    pdf.text(
-      `• Annual Local Rate: ${formatCurrency(calculations.rates.localAnnual)} ${currency}`,
-      20,
-      inputY + lh * 4
-    );
-    pdf.text(
-      `• Annual Offshore Rate: ${formatCurrency(calculations.rates.offshoreAnnual)} ${currency}`,
-      20,
-      inputY + lh * 5
-    );
-
-    pdf.setDrawColor(226, 232, 240);
-    pdf.line(15, 90, pdfWidth - 15, 90);
-
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(12);
-    pdf.setTextColor(30, 41, 59);
-    pdf.text("Financial Breakdown:", 15, 100);
-
-    pdf.addImage(imgData, "PNG", 5, 105, pdfWidth - 10, imgHeight);
-
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(7);
-    pdf.setTextColor(150, 150, 150);
-    pdf.text(
-      "* Rates sourced dynamically from Mars Consulting pricing sheet. Actual savings may vary.",
-      15,
-      pageHeight - 15
-    );
-    pdf.text("Generated via Mars Consulting Strategic ROI Tool.", 15, pageHeight - 10);
-
-    pdf.save(`Mars_ROI_${targetCountry.replace(" ", "_")}.pdf`);
-  };
 
   // ─────────────────────────────────────────────────────────────────────────
   // RENDER
@@ -453,8 +384,7 @@ const OffshoreResourcing = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Savings Calculator</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Compare fully loaded local hiring costs against our managed offshore model.
-              Rates are updated directly from our live pricing sheet.
+              Get a comparison of local and off-shore resourcing costs to analyse your potential savings.
             </p>
 
             {/* Live data status badge */}
@@ -516,7 +446,7 @@ const OffshoreResourcing = () => {
             className="grid lg:grid-cols-12 gap-8 max-w-6xl mx-auto"
           >
             {/* ── Inputs Panel ──────────────────────────────────────────── */}
-            <div className="lg:col-span-5 space-y-6 bg-secondary/50 p-8 rounded-3xl border border-border">
+            <div className="lg:col-span-5 self-start space-y-6 bg-secondary/50 p-8 rounded-3xl border border-border">
               <h3 className="text-xl font-bold text-primary flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-accent" /> Cost Modelling
               </h3>
@@ -611,7 +541,7 @@ const OffshoreResourcing = () => {
 
             {/* ── Results Panel ──────────────────────────────────────────── */}
             <div className="lg:col-span-7 space-y-6">
-              <div ref={reportRef} className="bg-white p-4 rounded-2xl">
+              <div className="bg-white p-4 rounded-2xl">
                 {/* KPI cards */}
                 <div className="grid sm:grid-cols-3 gap-4 mb-6 text-center">
                   <div className="bg-secondary/50 p-5 rounded-2xl border border-border">
@@ -670,26 +600,38 @@ const OffshoreResourcing = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-4">
-                <button
-                  disabled={!showResults}
-                  onClick={downloadPDF}
-                  className="px-8 py-3 bg-primary text-white rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition-all disabled:opacity-30"
-                >
-                  <Download className="w-4 h-4" /> Export Savings Analysis (PDF)
-                </button>
-
-                <p className="text-[10px] text-slate-400 italic leading-relaxed text-center max-w-lg">
-                  Estimates are based on rates sourced directly from Mars Consulting's live pricing sheet.
-                  Actual savings may vary based on specific tech stack requirements, seniority, and engagement model.
-                </p>
-              </div>
             </div>
           </motion.div>
+
+          <div className="mx-auto mt-8 max-w-4xl rounded-2xl border border-border bg-white p-5 text-left text-[11px] leading-relaxed text-slate-600 shadow-sm">
+            <p className="font-semibold text-primary">By using this tool, you acknowledge:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>
+                The figures provided by this calculator are for indicative purposes only and actual costs or savings may vary.
+              </li>
+              <li>
+                All are calculated at an average salaries in respective countries based on mid-level technical experience.
+              </li>
+              <li>
+                The rates provided may differ across industries, locations, and market conditions.
+              </li>
+              <li>
+                Local cost estimates are based on contract-based resource rates and include statutory obligations such as Leave
+                Loading, Australian/New Zealand Superannuation, and KiwiSaver contributions, where applicable.
+              </li>
+              <li>
+                All costs are calculated in AUD or NZD and translated using standard exchange rate assumptions, which may fluctuate.
+              </li>
+            </ul>
+            <p className="mt-4">
+              Note: This tool is intended for informational purposes only and does not constitute a formal quotation. Final pricing
+              will be determined based on specific project requirements and engagement terms.
+            </p>
+          </div>
         </div>
 
         {/* ── On-screen Debug Panel (remove before production) ─────────────── */}
-        <div className="max-w-6xl mx-auto mt-8">
+        {/* <div className="max-w-6xl mx-auto mt-8">
           <button
             onClick={() => setShowDebug((v) => !v)}
             className="text-xs text-muted-foreground underline underline-offset-2 hover:text-primary transition-colors"
@@ -720,7 +662,7 @@ const OffshoreResourcing = () => {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
         {/* ─────────────────────────────────────────────────────────────────── */}
 
       </section>
