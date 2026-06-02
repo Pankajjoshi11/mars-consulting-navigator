@@ -388,7 +388,7 @@ const OffshoreResourcing = () => {
             </p>
 
             {/* Live data status badge */}
-            <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full border text-xs font-medium
+            {/* <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full border text-xs font-medium
               bg-secondary/50 border-border text-muted-foreground">
               {dataStatus === "loading" && (
                 <>
@@ -420,7 +420,7 @@ const OffshoreResourcing = () => {
                   </button>
                 </>
               )}
-            </div>
+            </div> */}
           </motion.div>
 
           {/* Sheet Error Banner */}
@@ -518,7 +518,7 @@ const OffshoreResourcing = () => {
                 </div>
 
                 {/* Rate preview */}
-                {serviceType && (
+                {/* {serviceType && (
                   <div className="p-4 bg-accent/10 border border-accent/20 rounded-xl flex gap-3">
                     <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div className="space-y-1 text-[11px] text-muted-foreground leading-relaxed">
@@ -527,7 +527,7 @@ const OffshoreResourcing = () => {
                       <p>Offshore annual: <span className="font-semibold text-primary">{formatCurrency(calculations.rates.offshoreAnnual)}</span></p>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
 
               <button
