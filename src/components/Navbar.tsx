@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import marsLogo from "@/assets/Mars Consulting Logo - No Background.png";
+import marsLogo from "@/assets/Mars Consulting Logo_NoBg.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
